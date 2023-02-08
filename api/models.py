@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
-class HomeSchema(BaseModel):
+class PropertySchema(BaseModel):
     air_conditioning: str
     attic: str
     basement: str
@@ -36,12 +37,25 @@ class HomeSchema(BaseModel):
     zoning: str
 
 
+class AssessmentSchema(BaseModel):
+    apn: str
+    assessment_year: int
+    tax_year: int
+    total_assessed_value: float
+    tax_amount: float
+
+
 class HomeId(BaseModel):
     id: int
 
 
-class HomeDB(HomeSchema):
+class HomeSchema(BaseModel):
+    property: Optional[PropertySchema] = None
+    assessment: Optional[AssessmentSchema] = None
     id: int
+
+    class Config:
+        orm_mode = True
 
 
 

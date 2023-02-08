@@ -1,45 +1,46 @@
-from pysondb import db, getDb
+
+import os
 import json
-from pathlib import Path
+from pysondb import db, getDb
+from pysondb.db import JsonDatabase
+
+from api.data import home_one, home_two
 
 
-def create_db():
+def where_json(file_name) -> bool:
+    """
 
+    :param str file_name: Filename for JSON DB (in .json)
+    :return: True or False based on validation check
+    :rtype: bool
+    """
+    ABS_PATH = os.path.abspath('.')
+    return os.path.isfile(f"{ABS_PATH}/{file_name}") and os.access(f"{ABS_PATH}/{file_name}", os.R_OK)
+
+
+def create_db() -> JsonDatabase:
+    """
+
+    :return: The PysonDB JSON database
+    :rtype: JsonDatabase
+    """
+    if where_json('homebird.json'):
+        homebird_db = getDb("homebird.json")
+        return homebird_db
+    else:
+        homebird_db = create_db_from_scratch()
+        return homebird_db
+
+
+def create_db_from_scratch():
+    """
+
+    :return: The PysonDB JSON database
+    :rtype: JsonDatabase
+    """
     homebird_db = getDb("homebird.json")
 
-    home_one = {
-        "air_conditioning": "yes",
-        "attic": "false",
-        "basement": "full_basement",
-        "building_area_sq_ft": 1824,
-        "building_condition_score": 5,
-        "building_quality_score": 3,
-        "construction_type": "Wood",
-        "exterior_walls": "wood_siding",
-        "fireplace": "false",
-        "full_bath_count": 2,
-        "garage_parking_of_cars": 1,
-        "garage_type_parking": "underground_basement",
-        "heating": "forced_air_unit",
-        "heating_fuel_type": "gas",
-        "no_of_buildings": 1,
-        "no_of_stories": 2,
-        "number_of_bedrooms": 4,
-        "number_of_units": 1,
-        "partial_bath_count": 1,
-        "pool": "true",
-        "property_type": "Single Family Residential",
-        "roof_cover": "Asphalt",
-        "roof_type": "Wood truss",
-        "site_area_acres": 0.119,
-        "style": "colonial",
-        "total_bath_count": 2.5,
-        "total_number_of_rooms": 7,
-        "sewer": "municipal",
-        "subdivision": "CITY LAND ASSOCIATION",
-        "water": "municipal",
-        "year_built": 1957,
-        "zoning": "RH1"
-    }
+    homebird_db.add(home_one)
+    homebird_db.add(home_two)
 
     return homebird_db

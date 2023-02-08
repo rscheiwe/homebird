@@ -20,5 +20,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(heartbeat.router, tags=["Health Check"])
-app.include_router(homebird.router, prefix="/homebird", tags=["Home Data"])
+app.include_router(heartbeat.health_router, tags=["Health Check"])
+app.include_router(homebird.homes_router, prefix="/homebird", tags=["Home Data"])
