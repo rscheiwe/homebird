@@ -1,10 +1,12 @@
 from fastapi import APIRouter
+from api.models import HeartbeatSchema
 
 health_router = APIRouter()
 
 
-@health_router.get("/heartbeat")
+@health_router.get("/heartbeat", response_model=HeartbeatSchema)
 async def health_check():
-    # some async operation could happen here
-    # example: `notes = await get_all_notes()`
+    """
+    Aliveness check.
+    """
     return {"health_check": "health status OK!"}

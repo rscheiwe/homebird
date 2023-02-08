@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException, Path
 from typing import List, Any
-from api.models import HomeSchema, HomeId
-from pysondb.db import JsonDatabase
+from api.models import HomeSchema, HomeId, SewerType
+from tinydb import TinyDB, Query
 from api.create_db import create_db, create_db_from_scratch
 
 homes_router = APIRouter()
 
-homebird_db: JsonDatabase = create_db()
+homebird_db = create_db()
 
 
 @homes_router.get("/homes", response_model=List[HomeSchema])
@@ -15,7 +15,7 @@ async def read_all_homes() -> List:
     Retrieve all homes.
     """
     try:
-        data = homebird_db.getAll()
+        data = homebird_db.all()
     except:
         raise HTTPException(status_code=404, detail=f"Homes not found")
     return data
@@ -28,7 +28,7 @@ async def read_all_homes_ids() -> List:
     Retrieve list of home_ids for testing.
     """
     try:
-        data = homebird_db.getAll()
+        data = homebird_db.all()
     except:
         raise HTTPException(status_code=404, detail=f"Home IDs not found")
     return [
@@ -37,15 +37,32 @@ async def read_all_homes_ids() -> List:
     ]
 
 
-@homes_router.get("/homes/{home_id}", response_model=HomeSchema)
-async def read_home(
+@homes_router.get("/homes/{home_id}", response_model=List[HomeSchema])
+async def read_home_by_id(
         home_id: int = Path(..., gt=0),
 ) -> Any:
     """
     Retrieve home by ID.
     """
-    try:
-        data = homebird_db.getById(home_id)
-    except:
-        raise HTTPException(status_code=404, detail=f"Home with id: {home_id} not found")
-    return data
+    Home = Query()
+
+    data = homebird_db.search(Home.id == home_id)
+    if data:
+        return data
+    raise HTTPException(status_code=404, detail=f"Home with id: {home_id} not found")
+
+
+
+@homes_router.get("/homes/")
+async def read_home_by_sewer_type(
+        sewer_type: SewerType,
+) -> Any:
+    """
+    Retrieve home by Sewer Type.
+    """
+    Home = Query()
+
+    data = homebird_db.search(Home['property']['sewer'] == sewer_type)
+    if data:
+        return data
+    raise HTTPException(status_code=404, detail=f"Home with id: {sewer_type} not found")

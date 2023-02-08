@@ -3,12 +3,15 @@ Click
 colorama		
 fastapi~=0.89.1
 gunicorn		
-h11				
+h11
+httpx
 isort			
 lazy-object-proxy
 mccabe			
 pydantic~=1.10.4
-pylint			
+pylint
+pytest
+requests
 six				
 starlette~=0.22.0
 uvicorn			

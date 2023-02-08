@@ -1,5 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional
+from enum import Enum
+
+
+class HeartbeatSchema(BaseModel):
+    health_check: str
 
 
 class PropertySchema(BaseModel):
@@ -57,6 +62,13 @@ class HomeSchema(BaseModel):
     class Config:
         orm_mode = True
 
+
+class SewerType(str, Enum):
+    municipal = "municipal"
+    none = "none"
+    storm = "storm"
+    septic = "septic"
+    yes = "yes"
 
 
 

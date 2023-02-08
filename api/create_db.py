@@ -1,10 +1,13 @@
 
 import os
 import json
-from pysondb import db, getDb
-from pysondb.db import JsonDatabase
+from tinydb import TinyDB, Query
 
-from api.data import home_one, home_two
+from api.data import home_one, home_two, home_three
+
+
+ABS_PATH = os.path.abspath('.')
+FILE_NAME = 'homebird.json'
 
 
 def where_json(file_name) -> bool:
@@ -14,18 +17,17 @@ def where_json(file_name) -> bool:
     :return: True or False based on validation check
     :rtype: bool
     """
-    ABS_PATH = os.path.abspath('.')
     return os.path.isfile(f"{ABS_PATH}/{file_name}") and os.access(f"{ABS_PATH}/{file_name}", os.R_OK)
 
 
-def create_db() -> JsonDatabase:
+def create_db():
     """
 
     :return: The PysonDB JSON database
     :rtype: JsonDatabase
     """
-    if where_json('homebird.json'):
-        homebird_db = getDb("homebird.json")
+    if where_json(FILE_NAME):
+        homebird_db = TinyDB(f"{ABS_PATH}/{FILE_NAME}")
         return homebird_db
     else:
         homebird_db = create_db_from_scratch()
@@ -38,9 +40,10 @@ def create_db_from_scratch():
     :return: The PysonDB JSON database
     :rtype: JsonDatabase
     """
-    homebird_db = getDb("homebird.json")
+    homebird_db = TinyDB(f"{ABS_PATH}/{FILE_NAME}")
 
-    homebird_db.add(home_one)
-    homebird_db.add(home_two)
+    homebird_db.insert(home_one)
+    homebird_db.insert(home_two)
+    homebird_db.insert(home_three)
 
     return homebird_db
