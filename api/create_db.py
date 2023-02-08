@@ -1,7 +1,6 @@
 
 import os
-import json
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
 
 from api.data import home_one, home_two, home_three
 

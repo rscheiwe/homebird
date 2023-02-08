@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Path
 from typing import List, Any
 from api.models import HomeSchema, HomeId, SewerType
 from tinydb import TinyDB, Query
-from api.create_db import create_db, create_db_from_scratch
+from api.create_db import create_db
 
 homes_router = APIRouter()
 
