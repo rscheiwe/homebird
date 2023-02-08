@@ -1,10 +1,24 @@
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+
+from api import heartbeat, homebird
+
 
 app = FastAPI()
 
-#domain where this api is hosted for example : localhost:5000/docs to see swagger documentation automagically generated.
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "*",
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["DELETE", "GET", "POST", "PUT"],
+    allow_headers=["*"],
+)
 
-@app.get("/")
-def home():
-    return {"message":"Hello world. Welcome to the HomeBird API"}
+app.include_router(heartbeat.router, tags=["Health Check"])
+app.include_router(homebird.router, prefix="/homebird", tags=["Home Data"])
