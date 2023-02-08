@@ -10,23 +10,26 @@ homebird_db: JsonDatabase = create_db()
 
 
 @router.get("/homes")
-async def read_all_homes():
+async def read_all_homes() -> List:
     """
     Retrieve all homes.
     """
-    data = homebird_db.getAll()
-
-    if not data:
+    try:
+        data = homebird_db.getAll()
+    except:
         raise HTTPException(status_code=404, detail=f"Homes not found")
     return data
 
 
 @router.get("/homes-ids")
-async def read_all_homes_ids():
+async def read_all_homes_ids() -> List:
     """
     Retrieve list of home_ids for testing.
     """
-    data = homebird_db.getAll()
+    try:
+        data = homebird_db.getAll()
+    except:
+        raise HTTPException(status_code=404, detail=f"Home IDs not found")
     return [{key: value for key, value in obj.items() if key == "id"} for obj in data]
 
 
