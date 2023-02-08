@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 
-router = APIRouter()
+health_router = APIRouter()
 
 
-@router.get("/heartbeat")
+@health_router.get("/heartbeat")
 async def health_check():
     # some async operation could happen here
     # example: `notes = await get_all_notes()`

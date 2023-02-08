@@ -4,12 +4,12 @@ from api.models import HomeSchema, HomeDB, HomeId
 from pysondb.db import JsonDatabase
 from api.create_db import create_db
 
-router = APIRouter()
+homes_router = APIRouter()
 
 homebird_db: JsonDatabase = create_db()
 
 
-@router.get("/homes", response_model=List[HomeDB])
+@homes_router.get("/homes", response_model=List[HomeDB])
 async def read_all_homes() -> List:
     """
     Retrieve all homes.
@@ -21,7 +21,7 @@ async def read_all_homes() -> List:
     return data
 
 
-@router.get("/homes-ids", response_model=List[HomeId])
+@homes_router.get("/homes-ids", response_model=List[HomeId])
 async def read_all_homes_ids() -> List:
     """
     Retrieve list of home_ids for testing.
@@ -36,7 +36,7 @@ async def read_all_homes_ids() -> List:
     ]
 
 
-@router.get("/homes/{home_id}", response_model=HomeDB)
+@homes_router.get("/homes/{home_id}", response_model=HomeDB)
 async def read_home(
         home_id: int = Path(..., gt=0),
 ) -> Any:
