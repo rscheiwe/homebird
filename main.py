@@ -7,4 +7,4 @@ app = FastAPI()
 
 @app.get("/")
 def home():
-    return {"message":"Hello world"}
+    return {"message":"Hello world. Welcome to the HomeBird API"}
