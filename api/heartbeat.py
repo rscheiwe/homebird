@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.models import HeartbeatSchema
+from api.schemas import HeartbeatSchema
 
 health_router = APIRouter()
 

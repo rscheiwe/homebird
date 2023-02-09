@@ -2,7 +2,7 @@
 import os
 from tinydb import TinyDB
 
-from api.data import home_one, home_two, home_three
+from api.data import home_one, home_two, home_three, home_four
 
 
 ABS_PATH = os.path.abspath('.')
@@ -44,5 +44,6 @@ def create_db_from_scratch():
     homebird_db.insert(home_one)
     homebird_db.insert(home_two)
     homebird_db.insert(home_three)
+    homebird_db.insert(home_four)
 
     return homebird_db

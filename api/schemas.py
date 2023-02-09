@@ -54,10 +54,15 @@ class HomeId(BaseModel):
     id: int
 
 
+class HomeAddress(BaseModel):
+    property_address: str
+
+
 class HomeSchema(BaseModel):
+    id: int
+    property_address: str
     property: Optional[PropertySchema] = None
     assessment: Optional[AssessmentSchema] = None
-    id: int
 
     class Config:
         orm_mode = True
