@@ -58,9 +58,13 @@ class HomeAddress(BaseModel):
     property_address: str
 
 
+class HomeIdentifier(BaseModel):
+    property_identifier: str
+
 class HomeSchema(BaseModel):
     id: int
     property_address: str
+    property_identifier: str
     property: Optional[PropertySchema] = None
     assessment: Optional[AssessmentSchema] = None
 

@@ -1,6 +1,7 @@
 home_one = {
     "id": 1,
     "property_address": "4974 Johanna Forks, Shainafort, CT 572476",
+    "property_identifier": "4974+Johanna+Forks&zipcode=572476",
     "property": {
         "air_conditioning": "yes",
         "attic": "false",
@@ -47,6 +48,7 @@ home_one = {
 home_two = {
     "id": 2,
     "property_address": "71 Predovic Meadow, Port Emersonside, SD 41277",
+    "property_identifier": "71+Predovic+Meadow&zipcode=41277",
     "property": {
         "air_conditioning": "yes",
         "attic": "false",
@@ -95,6 +97,7 @@ home_two = {
 home_three = {
     "id": 3,
     "property_address": "4553 Haley Stream Apt. 502, Lakinstad, MT 41214",
+    "property_identifier": "4553+Haley+Stream+Apt+502&zipcode=41214",
     "property": {
         "air_conditioning": "no",
         "attic": "false",
@@ -144,6 +147,7 @@ home_three = {
 home_four = {
     "id": 3,
     "property_address": "375 Buckridge Light Apt. 154, Karlimouth, IA 37545-4100",
+    "property_identifier": "375+Buckridge+Light+Apt+154&zipcode=37545",
     "property": {
         "air_conditioning": "no",
         "attic": "false",

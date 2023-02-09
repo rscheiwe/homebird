@@ -3,6 +3,7 @@ from typing import List, Any
 from api.schemas import HomeSchema, HomeId, SewerType
 from tinydb import TinyDB, Query
 from api.create_db import create_db
+from urllib.parse import unquote
 
 homes_router = APIRouter()
 
@@ -39,14 +40,14 @@ async def read_all_homes_ids() -> List:
 
 @homes_router.get("/homes/{home_id}", response_model=List[HomeSchema])
 async def read_home_by_id(
-        home_id: int = Path(..., gt=0),
+        home_id: str,
 ) -> Any:
     """
     Retrieve home by ID.
     """
     Home = Query()
-
-    data = homebird_db.search(Home.id == home_id)
+    decoded_uri = unquote(home_id)
+    data = homebird_db.search(Home.property_address == decoded_uri)
     if data:
         return data
     raise HTTPException(status_code=404, detail=f"Home with id: {home_id} not found")
