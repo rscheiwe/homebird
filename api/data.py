@@ -47,8 +47,8 @@ home_one = {
 }
 home_two = {
     "id": 2,
-    "property_address": "71 Predovic Meadow, Port Emersonside, SD 41277",
-    "property_identifier": "71+Predovic+Meadow&zipcode=41277",
+    "property_address": "371 Predovic Meadow, Port Emersonside, SD 41277",
+    "property_identifier": "371+Predovic+Meadow&zipcode=41277",
     "property": {
         "air_conditioning": "yes",
         "attic": "false",
