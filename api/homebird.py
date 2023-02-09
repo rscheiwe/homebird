@@ -11,59 +11,53 @@ homebird_db = create_db()
 
 
 @homes_router.get("/homes", response_model=List[HomeSchema])
-async def read_all_homes() -> List:
+async def read_all_homes(
+        sewer_type: SewerType,
+) -> List:
     """
-    Retrieve all homes.
+    **Retrieve all homes.**<br><br> Choose `sewer_type` to filter results. Select `any` to return all results.
     """
     try:
-        data = homebird_db.all()
+        if sewer_type.value == 'any':
+            data = homebird_db.all()
+            return data
+        else:
+            Home = Query()
+            data = homebird_db.search(Home['property']['sewer'] == sewer_type.value)
+            return data
     except:
         raise HTTPException(status_code=404, detail=f"Homes not found")
-    return data
 
 
 # @homes_router.get("/homes-ids",)
 @homes_router.get("/homes-ids", response_model=List[HomeId])
 async def read_all_homes_ids() -> List:
     """
-    Retrieve list of home_ids for testing.
+    **Retrieve list of home_ids for testing.**
     """
     try:
         data = homebird_db.all()
+        return [
+            {key: value for key, value in obj.items() if key == "id"}
+            for obj in data
+        ]
     except:
         raise HTTPException(status_code=404, detail=f"Home IDs not found")
-    return [
-        {key: value for key, value in obj.items() if key == "id"}
-        for obj in data
-    ]
 
 
-@homes_router.get("/homes/{home_id}", response_model=List[HomeSchema])
-async def read_home_by_id(
-        home_id: str,
+@homes_router.get("/homes/{home_address}", response_model=List[HomeSchema])
+async def read_home_by_address(
+        home_address: str,
 ) -> Any:
     """
-    Retrieve home by ID.
+    **Retrieve home by address.**<br><br>
+    `home_address` is dispatched from the main API and is unique to an authenticated user.
     """
-    Home = Query()
-    decoded_uri = unquote(home_id)
-    data = homebird_db.search(Home.property_address == decoded_uri)
-    if data:
-        return data
-    raise HTTPException(status_code=404, detail=f"Home with id: {home_id} not found")
-
-
-
-@homes_router.get("/homes/")
-async def read_home_by_sewer_type(
-        sewer_type: SewerType,
-) -> Any:
-    """
-    Retrieve home by Sewer Type.
-    """
-    Home = Query()
-
-    data = homebird_db.search(Home['property']['sewer'] == sewer_type)
-    if data:
-        return data
-    raise HTTPException(status_code=404, detail=f"Home with id: {sewer_type} not found")
+    try:
+        Home = Query()
+        decoded_uri = unquote(home_address)
+        data = homebird_db.search(Home.property_address == decoded_uri)
+        if data:
+            return data
+    except:
+        raise HTTPException(status_code=404, detail=f"Home with id: {home_address} not found")

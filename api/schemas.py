@@ -74,6 +74,7 @@ class HomeSchema(BaseModel):
 
 
 class SewerType(str, Enum):
+    any = "any"
     municipal = "municipal"
     none = "none"
     storm = "storm"
