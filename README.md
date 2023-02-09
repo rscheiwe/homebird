@@ -12,11 +12,17 @@ To refresh data:
 1) Delete `homebird.json`
 2) Re-deploy (locally or via server) to refresh `homebird.json`
 
+To run tests:
+```angular2html
+$ pytest
+```
+
 ### URLs
 
 Deployed at: [homebird.herokuapp.com](homebird.herokuapp.com)
 
 Swagger Docs: [homebird.herokuapp.com/docs](homebird.herokuapp.com/docs)
+
 
 ### API Endpoints
 
