@@ -61,6 +61,7 @@ class HomeAddress(BaseModel):
 class HomeIdentifier(BaseModel):
     property_identifier: str
 
+
 class HomeSchema(BaseModel):
     id: int
     property_address: str
