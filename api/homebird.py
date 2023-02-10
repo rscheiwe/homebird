@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Path
-from typing import List, Any
+from typing import List, Any, Union
 from api.schemas import HomeSchema, HomeId, SewerType
 from tinydb import TinyDB, Query
 from api.create_db import create_db
@@ -12,13 +12,17 @@ homebird_db = create_db()
 
 @homes_router.get("/homes", response_model=List[HomeSchema])
 async def read_all_homes(
-        sewer_type: SewerType,
+        sewer_type: Union[SewerType, None] = None,
 ) -> List:
     """
     **Retrieve all homes.**<br><br> Choose `sewer_type` to filter results. Select `any` to return all results.
     """
+
     try:
-        if sewer_type.value == 'any':
+        if sewer_type == None:
+            data = homebird_db.all()
+            return data
+        elif sewer_type.value == 'all':
             data = homebird_db.all()
             return data
         else:
