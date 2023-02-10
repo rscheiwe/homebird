@@ -8,6 +8,8 @@ def create_app() -> FastAPI:
     app = FastAPI()
 
     origins = [
+        "https://genesis-homes.herokuapp.com/",
+        "https://genesis-homes.herokuapp.com/*",
         "http://localhost",
         "http://localhost:8080",
         "*",
