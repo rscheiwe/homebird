@@ -3,7 +3,7 @@
 To run locally:
 
 ```angular2html
-$ uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8002
+$ uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8003
 ```
 
 **Note:** The data is generated at runtime if and only if no data is detected in a local `json` file.
